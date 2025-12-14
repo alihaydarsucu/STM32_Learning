@@ -1,26 +1,41 @@
 # STM32F103RB Learning Journey
 
-My embedded systems learning journey with NUCLEO-F103RB.
+This repository documents my embedded systems learning journey using the **STM32 NUCLEO-F103RB** development board.  
+The focus is on understanding STM32 peripherals through practical examples using **STM32CubeIDE** and the **HAL library**.
 
-## Projects
 
-### ✅ 00 - LED Blink
+## Project Steps
+
+### ✅ 00 – LED Blink
 - GPIO configuration
-- Using the HAL library
-- **Status:** Completed
+- Basic LED control using HAL
+- Status: **Completed**
 
-### ✅ 01 - UART Control
-- Serial communication with USART2
-- LED control via terminal
-- 115200 baud, 8N1
-- **Status:** Completed
 
-## Hardware
-- **Board:** NUCLEO-F103RB
-- **MCU:** STM32F103RBT6
-- **IDE:** STM32CubeIDE 1.19.0
-- **OS:** Arch Linux
+### ✅ 01 – UART Control
+- Serial communication using **USART2**
+- LED control via terminal commands
+- Configuration: **115200 baud, 8N1**
+- Status: **Completed**
+
+### 🟡 02 – PWM Output (In Progress)
+- PWM generation using **TIM2 (Channel 1)**
+- Duty cycle control via CCR register
+- Configured using HAL
+- Hardware output available on **PA0 (TIM2_CH1)**
+- Status: **In Progress**
+
+
+## Hardware & Software
+
+- **Board:** NUCLEO-F103RB  
+- **MCU:** STM32F103RBT6  
+- **IDE:** STM32CubeIDE 1.19.0  
+- **OS:** Arch Linux  
+
 
 ## Notes
+
 - Virtual COM Port: `/dev/ttyACM0`
-- ST-LINK firmware: V2J46M33
+- ST-LINK firmware: **V2J46M33**
+- UART communication tested via terminal
