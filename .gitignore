@@ -1,0 +1,24 @@
+Debug/
+Release/
+*.o
+*.su
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+
+# IDE files
+.settings/
+.project
+.cproject
+.metadata/
+
+# Logs
+*.log
+
+# Keep only source
+!Core/
+!Drivers/STM32F1xx_HAL_Driver/
+!*.ioc
