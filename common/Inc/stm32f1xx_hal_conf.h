@@ -33,20 +33,26 @@
   * @brief This is the list of modules to be used in the HAL driver
   */
 
+/*
+ * Shared HAL configuration.
+ *
+ * All modules used across the phases are enabled here so that every phase
+ * builds against the same common/Inc/stm32f1xx_hal_conf.h. Unused HAL code is
+ * stripped at link time by --gc-sections, keeping firmware small.
+ */
 #define HAL_MODULE_ENABLED
-  /*#define HAL_ADC_MODULE_ENABLED   */
+#define HAL_ADC_MODULE_ENABLED
 /*#define HAL_CRYP_MODULE_ENABLED   */
 /*#define HAL_CAN_MODULE_ENABLED   */
 /*#define HAL_CAN_LEGACY_MODULE_ENABLED   */
 /*#define HAL_CEC_MODULE_ENABLED   */
-/*#define HAL_CORTEX_MODULE_ENABLED   */
+#define HAL_CORTEX_MODULE_ENABLED
 /*#define HAL_CRC_MODULE_ENABLED   */
 /*#define HAL_DAC_MODULE_ENABLED   */
-/*#define HAL_DMA_MODULE_ENABLED   */
-/*#define HAL_ETH_MODULE_ENABLED   */
-/*#define HAL_FLASH_MODULE_ENABLED   */
+#define HAL_DMA_MODULE_ENABLED
+#define HAL_FLASH_MODULE_ENABLED
 #define HAL_GPIO_MODULE_ENABLED
-/*#define HAL_I2C_MODULE_ENABLED   */
+#define HAL_I2C_MODULE_ENABLED
 /*#define HAL_I2S_MODULE_ENABLED   */
 /*#define HAL_IRDA_MODULE_ENABLED   */
 /*#define HAL_IWDG_MODULE_ENABLED   */
@@ -55,8 +61,8 @@
 /*#define HAL_PCCARD_MODULE_ENABLED   */
 /*#define HAL_PCD_MODULE_ENABLED   */
 /*#define HAL_HCD_MODULE_ENABLED   */
-/*#define HAL_PWR_MODULE_ENABLED   */
-/*#define HAL_RCC_MODULE_ENABLED   */
+#define HAL_PWR_MODULE_ENABLED
+#define HAL_RCC_MODULE_ENABLED
 /*#define HAL_RTC_MODULE_ENABLED   */
 /*#define HAL_SD_MODULE_ENABLED   */
 /*#define HAL_MMC_MODULE_ENABLED   */
@@ -68,14 +74,7 @@
 #define HAL_UART_MODULE_ENABLED
 /*#define HAL_USART_MODULE_ENABLED   */
 /*#define HAL_WWDG_MODULE_ENABLED   */
-
-#define HAL_CORTEX_MODULE_ENABLED
-#define HAL_DMA_MODULE_ENABLED
-#define HAL_FLASH_MODULE_ENABLED
 #define HAL_EXTI_MODULE_ENABLED
-#define HAL_GPIO_MODULE_ENABLED
-#define HAL_PWR_MODULE_ENABLED
-#define HAL_RCC_MODULE_ENABLED
 
 /* ########################## Oscillator Values adaptation ####################*/
 /**

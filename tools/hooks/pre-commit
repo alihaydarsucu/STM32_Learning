@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# pre-commit - run basic sanity checks before a commit is created.
+#
+# Currently checks:
+#   * no trailing whitespace in staged text files
+#   * no executable binaries staged by mistake (HEX/ELF/BIN artifacts)
+#
+# It is intentionally small so it stays fast. Extend as the project grows.
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+status=0
+
+# 1) Trailing whitespace check on staged files
+if ! git diff --cached --check -- . ':!*.ioc' >/dev/null; then
+  echo -e "${RED}[pre-commit]${NC} Trailing whitespace / blank-line errors detected:"
+  git diff --cached --check -- . ':!*.ioc'
+  status=1
+fi
+
+# 2) Forbid committing build artifacts
+staged_bins=$(git diff --cached --name-only | grep -E '\.(elf|bin|hex|o|map|lst)$' || true)
+if [ -n "$staged_bins" ]; then
+  echo -e "${RED}[pre-commit]${NC} Build artifacts must not be committed:"
+  echo "$staged_bins"
+  status=1
+fi
+
+if [ $status -eq 0 ]; then
+  echo -e "${GREEN}[pre-commit]${NC} OK"
+else
+  echo -e "${RED}[pre-commit]${NC} Commit aborted. Fix the issues above and re-stage."
+fi
+
+exit $status

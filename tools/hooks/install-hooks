@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# install-hooks - symlink the repo's git hooks into .git/hooks/.
+#
+# Usage: tools/hooks/install-hooks
+
+set -e
+cd "$(dirname "$0")/../.."   # repo root
+
+HOOK_SRC="tools/hooks"
+HOOK_DST=".git/hooks"
+
+mkdir -p "$HOOK_DST"
+
+for hook in pre-commit; do
+  if [ -f "$HOOK_SRC/$hook" ]; then
+    chmod +x "$HOOK_SRC/$hook"
+    ln -sf "../../$HOOK_SRC/$hook" "$HOOK_DST/$hook"
+    echo "installed hook: $hook"
+  fi
+done
+
+echo "done"

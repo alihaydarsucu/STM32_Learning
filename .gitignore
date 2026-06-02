@@ -1,3 +1,5 @@
+# Build outputs
+build/
 Debug/
 Release/
 *.o
@@ -8,6 +10,7 @@ Release/
 *.hex
 *.map
 *.list
+*.lst
 
 # IDE files
 .settings/
@@ -18,7 +21,8 @@ Release/
 # Logs
 *.log
 
-# Keep only source
+# Keep source only
 !Core/
-!Drivers/STM32F1xx_HAL_Driver/
+!Drivers/
+!common/
 !*.ioc
