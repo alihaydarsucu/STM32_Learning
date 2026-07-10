@@ -20,6 +20,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_it.h"
+#ifdef USE_FREERTOS
+#include "FreeRTOS.h"
+#include "task.h"
+#include "portmacro.h"
+#endif
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -150,9 +155,13 @@ void SVC_Handler(void)
   /* USER CODE BEGIN SVCall_IRQn 0 */
 
   /* USER CODE END SVCall_IRQn 0 */
+#ifdef USE_FREERTOS
+  vPortSVCHandler();
+#else
   /* USER CODE BEGIN SVCall_IRQn 1 */
 
   /* USER CODE END SVCall_IRQn 1 */
+#endif
 }
 
 /**
@@ -176,9 +185,13 @@ void PendSV_Handler(void)
   /* USER CODE BEGIN PendSV_IRQn 0 */
 
   /* USER CODE END PendSV_IRQn 0 */
+#ifdef USE_FREERTOS
+  xPortPendSVHandler();
+#else
   /* USER CODE BEGIN PendSV_IRQn 1 */
 
   /* USER CODE END PendSV_IRQn 1 */
+#endif
 }
 
 /**
@@ -190,6 +203,9 @@ void SysTick_Handler(void)
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
+#ifdef USE_FREERTOS
+  xPortSysTickHandler();
+#endif
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */

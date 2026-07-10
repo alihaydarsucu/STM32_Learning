@@ -56,6 +56,9 @@ C_SOURCES += $(FRT_C_SOURCES)
 C_INCLUDES += -I$(FRT_SRC)/include -I$(FRT_SRC)/portable/GCC/ARM_CM3 \
               -I$(FRT_SRC)/CMSIS_RTOS_V2
 PRINTF_EXCLUDE := -fno-builtin-printf
+C_DEFS += -DUSE_FREERTOS
+C_DEFS += -DCMSIS_device_header=\"stm32f1xx.h\"
+C_DEFS += -DUSE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION=1
 endif
 
 # --- Flags ------------------------------------------------------------------
@@ -68,7 +71,7 @@ LDFLAGS := $(MCU) -T$(LDSCRIPT) -Wl,--gc-sections --specs=nano.specs \
 OBJS := $(patsubst $(CORE_SRC)/%.c,$(BUILD_DIR)/%.o,$(filter $(CORE_SRC)/%,$(C_SOURCES)))
 OBJS += $(patsubst $(COMMON_SRC)/%.c,$(BUILD_DIR)/%.o,$(filter $(COMMON_SRC)/%,$(C_SOURCES)))
 OBJS += $(patsubst $(DRV_SRC)/%.c,$(BUILD_DIR)/%.o,$(filter $(DRV_SRC)/%,$(C_SOURCES)))
-OBJS += $(patsubst $(FRT_SRC)/%.c,$(BUILD_DIR)/%.o,$(filter $(FRT_SRC)/%,$(C_SOURCES)))
+OBJS += $(patsubst $(FRT_SRC)/%.c,$(BUILD_DIR)/%.o,$(wildcard $(FRT_SRC)/*.c))
 OBJS += $(patsubst $(FRT_SRC)/portable/GCC/ARM_CM3/%.c,$(BUILD_DIR)/%.o,$(filter $(FRT_SRC)/portable/GCC/ARM_CM3/%,$(C_SOURCES)))
 OBJS += $(patsubst $(FRT_SRC)/portable/MemMang/heap_4.c,$(BUILD_DIR)/heap_4.o,$(filter $(FRT_SRC)/portable/MemMang/heap_4.c,$(C_SOURCES)))
 OBJS += $(patsubst $(FRT_SRC)/CMSIS_RTOS_V2/%.c,$(BUILD_DIR)/%.o,$(filter $(FRT_SRC)/CMSIS_RTOS_V2/%,$(C_SOURCES)))
@@ -81,27 +84,35 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: $(CORE_SRC)/%.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(COMMON_SRC)/%.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(DRV_SRC)/%.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(FRT_SRC)/%.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(FRT_SRC)/portable/GCC/ARM_CM3/%.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/heap_4.o: $(FRT_SRC)/portable/MemMang/heap_4.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(FRT_SRC)/CMSIS_RTOS_V2/%.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(COMMON_STARTUP)/%.s | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(ASFLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJS)

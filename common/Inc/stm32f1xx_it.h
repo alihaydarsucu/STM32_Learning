@@ -57,6 +57,14 @@ void PendSV_Handler(void);
 void SysTick_Handler(void);
 /* USER CODE BEGIN EFP */
 void EXTI15_10_IRQHandler(void);
+#ifdef USE_FREERTOS
+void SVC_Handler(void);
+void PendSV_Handler(void);
+void SysTick_Handler(void);
+void vPortSVCHandler(void);
+void xPortPendSVHandler(void);
+void xPortSysTickHandler(void);
+#endif
 /* USER CODE END EFP */
 
 #ifdef __cplusplus
